@@ -1,4 +1,7 @@
 {
+	"config": {
+		"vendor-dir": "modules"
+	},
 	"require": {
 		"phpunit/phpunit": "3.7.24",
 		"phing/phing": "dev-master"

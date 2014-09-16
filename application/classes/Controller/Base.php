@@ -14,4 +14,4 @@ class Controller_Base extends Controller_Template {
 		$current_user = Auth::instance()->get_user();
 		View::bind_global('current_user', $current_user);
 	}
-} // End Welcome
+} // End Base

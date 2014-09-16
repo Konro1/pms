@@ -6,6 +6,7 @@
 		"phpunit/phpunit": "3.7.24",
 		"phing/phing": "dev-master",
 		"openbuildings/jam": "0.4.58",
-		"openbuildings/jam-auth": "0.2.3"
+		"openbuildings/jam-auth": "0.2.3",
+		"openbuildings/timestamped-migrations": "0.1.4"
 	}
 }

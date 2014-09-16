@@ -1,9 +1,11 @@
 {
 	"config": {
-		"vendor-dir": "modules"
+		"vendor-dir": "application/vendor"
 	},
 	"require": {
 		"phpunit/phpunit": "3.7.24",
-		"phing/phing": "dev-master"
+		"phing/phing": "dev-master",
+		"openbuildings/jam": "0.4.58",
+		"openbuildings/jam-auth": "0.2.3"
 	}
 }

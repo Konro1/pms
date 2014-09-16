@@ -2,6 +2,8 @@
 
 class Controller_Base extends Controller_Template {
 
+	public $current_user = null;
+
 	public function before()
 	{
 		parent::before();
@@ -12,6 +14,7 @@ class Controller_Base extends Controller_Template {
 		}
 
 		$current_user = Auth::instance()->get_user();
+		$this->current_user = $current_user;
 		View::bind_global('current_user', $current_user);
 	}
 } // End Base

@@ -16,44 +16,44 @@ CREATE TABLE `projects` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   `creator_id` int(10) unsigned NOT NULL,
+  `status_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   KEY `fk_projects_users1_idx` (`creator_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `projects_users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `projects_users` (
-  `projects_id` int(10) unsigned NOT NULL,
-  `users_id` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`projects_id`,`users_id`),
-  KEY `fk_projects_has_users_users1_idx` (`users_id`),
-  KEY `fk_projects_has_users_projects1_idx` (`projects_id`)
+  `project_id` int(10) unsigned NOT NULL,
+  `user_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`project_id`,`user_id`),
+  KEY `fk_projects_has_users_users1_idx` (`user_id`),
+  KEY `fk_projects_has_users_projects1_idx` (`project_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `roles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `roles` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(35) DEFAULT NULL,
-  `description` varchar(255) DEFAULT NULL,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(32) NOT NULL,
+  `description` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`)
+  UNIQUE KEY `uniq_name` (`name`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `roles_users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `roles_users` (
-  `roles_id` int(10) unsigned NOT NULL,
-  `users_id` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`roles_id`,`users_id`),
-  KEY `fk_roles_has_users_users1_idx` (`users_id`),
-  KEY `fk_roles_has_users_roles1_idx` (`roles_id`),
-  CONSTRAINT `fk_roles_has_users_roles1` FOREIGN KEY (`roles_id`) REFERENCES `roles` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_roles_has_users_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  `user_id` int(10) unsigned NOT NULL,
+  `role_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`user_id`,`role_id`),
+  KEY `fk_role_id` (`role_id`),
+  CONSTRAINT `roles_users_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `roles_users_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `schema_version`;
@@ -99,15 +99,17 @@ DROP TABLE IF EXISTS `user_tokens`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user_tokens` (
-  `id` int(11) unsigned NOT NULL,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) unsigned NOT NULL,
   `user_agent` varchar(40) NOT NULL,
   `token` varchar(40) NOT NULL,
+  `type` varchar(100) NOT NULL,
   `created` int(10) unsigned NOT NULL,
   `expires` int(10) unsigned NOT NULL,
-  `users_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_user_tokens_users1_idx` (`users_id`),
-  CONSTRAINT `fk_user_tokens_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  UNIQUE KEY `uniq_token` (`token`),
+  KEY `fk_user_id` (`user_id`),
+  CONSTRAINT `user_tokens_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `users`;
@@ -125,10 +127,11 @@ CREATE TABLE `users` (
   `last_login` int(10) unsigned DEFAULT NULL,
   `facebook_uid` varchar(255) DEFAULT NULL,
   `twitter_uid` varchar(255) DEFAULT NULL,
+  `last_login_ip` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `username_UNIQUE` (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

@@ -3,21 +3,17 @@
 /**
 * Project model
 */
-class Model_Project extends Jam_Model
+class Model_Project_Status extends Jam_Model
 {
 	public static function initialize(Jam_Meta $meta)
 	{
 		$meta->name_key('id');
 		$meta->primary_key('id');
 
-		$meta->association('users', Jam::association('manytomany'));
-		$meta->association('user', Jam::association('hasone'));
-		$meta->association('project_status', Jam::association('hasone'));
-
 		$meta->fields(array(
 			'id'        => Jam::field('primary'),
 			'name'      => Jam::field('string'),
-			'status_id'      => Jam::field('integer'),
+			'type'      => Jam::field('string'),
 		));
 	}
 }

@@ -10,11 +10,11 @@
 * add_index($table_name, $index_name, $columns, $index_type = 'normal')
 * remove_index($table_name, $index_name)
 */
-class Create_Table_Project_Statuses extends Migration {
+class Create_Table_Ticket_Statuses extends Migration {
 
 	public function up()
 	{
-		$this->create_table('project_statuses', array(
+		$this->create_table('ticket_statuses', array( 
 			'name' => array(
 				'type' => 'VARCHAR',
 				'null' => false,
@@ -26,10 +26,18 @@ class Create_Table_Project_Statuses extends Migration {
 				'limit' => 50,
 			),
 		 ),array('id' => TRUE, 'options' => ''));
-	}
 
+		DB::query(Database::INSERT, "INSERT into ticket_statuses (name, type) VALUES 
+			('new', 'open'),
+			('invalid', 'open'),
+			('in progress', 'open'),
+			('on hold', 'open'),
+			('completed', 'closed'),
+			('verfied', 'closed')")->execute();
+	}
+	
 	public function down()
 	{
-		$this->drop_table('projects_statuses');
+		$this->drop_table('ticket_statuses');
 	}
 }

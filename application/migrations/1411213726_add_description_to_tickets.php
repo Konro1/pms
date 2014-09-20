@@ -10,26 +10,15 @@
 * add_index($table_name, $index_name, $columns, $index_type = 'normal')
 * remove_index($table_name, $index_name)
 */
-class Create_Table_Project_Statuses extends Migration {
+class Add_Description_To_Tickets extends Migration {
 
 	public function up()
 	{
-		$this->create_table('project_statuses', array(
-			'name' => array(
-				'type' => 'VARCHAR',
-				'null' => false,
-				'limit' => 50,
-			),
-			'type' => array(
-				'type' => 'VARCHAR',
-				'null' => false,
-				'limit' => 50,
-			),
-		 ),array('id' => TRUE, 'options' => ''));
+		$this->add_column('tickets', 'description', 'text');
 	}
-
+	
 	public function down()
 	{
-		$this->drop_table('projects_statuses');
+		$this->remove_column('tickets', 'description');
 	}
 }

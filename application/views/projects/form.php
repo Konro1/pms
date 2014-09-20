@@ -10,7 +10,7 @@
 			<label for="status">Status</label>
 			<select name="status_id" id="status" class="form-control">
 				<?php foreach ($statuses_list as $key => $value): ?>
-					<option value="<?php echo $key ?>" <?php if ($post['status_id'] == $key): ?> selected="selected" <?php endif ?>><?php echo $value['name'] ?></option>
+					<option value="<?php echo $key ?>" <?php if (isset($post['status_id']) && $post['status_id'] == $key): ?> selected="selected" <?php endif ?>><?php echo $value['name'] ?></option>
 				<?php endforeach ?>
 			</select>
 		</div>

@@ -14,3 +14,4 @@ vendor/*
 application/cache/*
 application/logs/*
 application/vendor/*
+application/migrations/schema.sql
